@@ -6,7 +6,7 @@ try:
         port='5432',
         database='lev',
         user='postgres',
-        password='123',
+        password='123456',
     )
 except psycopg2.Error as ex:
     print(f"Error: {ex}. While connecting to Database or Database not exist.")
