@@ -20,7 +20,7 @@ CREATE TABLE "client" (
   "id" SERIAL PRIMARY KEY,
   "first_name" varchar,
   "second_name" varchar,
-  "adress" varchar,
+  "address" varchar,
   "telephone" varchar,
   "created_at" timestamp
 );

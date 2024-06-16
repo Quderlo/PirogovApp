@@ -37,7 +37,7 @@ class Client_Frame(tk.Frame):
 
         # Получаем данные из базы данных
         cursor = connection.cursor()
-        cursor.execute("SELECT first_name, second_name, adress, telephone, created_at FROM client")
+        cursor.execute("SELECT first_name, second_name, address, telephone, created_at FROM client")
         clients = cursor.fetchall()
 
         # Заполняем таблицу данными
