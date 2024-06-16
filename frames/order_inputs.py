@@ -63,6 +63,12 @@ class Order_Input(tk.Frame):
 
         new_order_id = cursor.fetchone()[0]
         connection.commit()
+
+        cursor.execute("INSERT INTO progress (status, notes, created_at, id_order) VALUES "
+                       "(%s, %s, CURRENT_TIMESTAMP, %s)",
+                       ("Передано в приёмке", "Ожидание принятия в работу", new_order_id))
+        connection.commit()
+
         cursor.close()
 
         messagebox.showinfo("Успех", f"Новый заказ успешно добавлен с ID: {new_order_id}")

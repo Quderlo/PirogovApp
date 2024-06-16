@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from data_base_connect import connection
+from frames.order_detail import Order_Detail_Window
 
 
 class Order_Frame(tk.Frame):
@@ -19,6 +20,10 @@ class Order_Frame(tk.Frame):
         self.tree.heading("Directory", text="Техника")
         self.tree.pack(expand=True, fill="both")
 
+        self.detail_window = None
+
+        self.tree.bind("<Double-1>", self.on_double_click)
+
     def frame_pack(self):
         self.pack()
         self.load_data()
@@ -29,13 +34,18 @@ class Order_Frame(tk.Frame):
         self.pack_forget()
         self.parent.buttons_activation()
         self.btn.configure(text="Заказы", command=self.frame_pack)
+        if self.detail_window is not None:
+            self.detail_window.pack_forget()
 
     def load_data(self):
+        # Очищаем таблицу перед загрузкой новых данных
         for row in self.tree.get_children():
             self.tree.delete(row)
 
+        # Получаем данные из базы данных
         cursor = connection.cursor()
-        cursor.execute("SELECT o.description, o.total_cost, o.serial_number, o.created_at, w.first_name || ' ' || w.second_name AS worker_name, d.name AS directory_name "
+        cursor.execute("SELECT o.id, o.description, o.total_cost, o.serial_number, o.created_at, "
+                       "w.first_name || ' ' || w.second_name AS worker_name, d.name AS directory_name "
                        "FROM \"order\" o "
                        "JOIN worker w ON o.worker_id = w.id "
                        "JOIN directory d ON o.directory_id = d.id")
@@ -44,3 +54,16 @@ class Order_Frame(tk.Frame):
         # Заполняем таблицу данными
         for order in orders:
             self.tree.insert("", "end", values=order)
+
+    def on_double_click(self, event):
+        item = self.tree.selection()[0]
+        order_id = self.tree.item(item, "values")[0]
+        self.show_order_details(order_id)
+
+    def show_order_details(self, order_id):
+        if self.detail_window:
+            self.detail_window.destroy()
+
+        self.detail_window = Order_Detail_Window(self.parent, order_id)
+        self.detail_window.pack()
+

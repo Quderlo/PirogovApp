@@ -1,4 +1,4 @@
-CREATE TABLE "order" (
+CREATE TABLE "orders" (
   "id" SERIAL PRIMARY KEY,
   "description" varchar,
   "total_cost" int,
@@ -13,6 +13,7 @@ CREATE TABLE "progress" (
   "id" SERIAL PRIMARY KEY,
   "status" varchar,
   "notes" varchar,
+  "created_at" timestamp,
   "id_order" int
 );
 
