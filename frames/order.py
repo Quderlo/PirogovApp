@@ -38,11 +38,9 @@ class Order_Frame(tk.Frame):
             self.detail_window.pack_forget()
 
     def load_data(self):
-        # Очищаем таблицу перед загрузкой новых данных
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        # Получаем данные из базы данных
         cursor = connection.cursor()
         cursor.execute("SELECT o.id, o.description, o.total_cost, o.serial_number, o.created_at, "
                        "w.first_name || ' ' || w.second_name AS worker_name, d.name AS directory_name "
@@ -51,7 +49,6 @@ class Order_Frame(tk.Frame):
                        "JOIN directory d ON o.directory_id = d.id")
         orders = cursor.fetchall()
 
-        # Заполняем таблицу данными
         for order in orders:
             self.tree.insert("", "end", values=order)
 

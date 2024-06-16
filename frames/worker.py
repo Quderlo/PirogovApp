@@ -28,16 +28,13 @@ class Worker_Frame(tk.Frame):
         self.btn.configure(text="Работники", command=self.frame_pack)
 
     def load_data(self):
-        # Очищаем таблицу перед загрузкой новых данных
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        # Получаем данные из базы данных
         cursor = connection.cursor()
         cursor.execute("SELECT first_name, second_name, telephone FROM worker")
         workers = cursor.fetchall()
 
-        # Заполняем таблицу данными
         for worker in workers:
             self.tree.insert("", "end", values=worker)
 

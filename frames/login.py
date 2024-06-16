@@ -59,7 +59,6 @@ class Login_Frame(tk.Frame):
             mb.showerror("Ошибка", "Пожалуйста, заполните все поля")
             return
 
-        # Создаём таблицы если их нет
         try:
             cursor = connection.cursor()
             cursor.execute("""
@@ -77,7 +76,7 @@ class Login_Frame(tk.Frame):
         try:
             cursor = connection.cursor()
 
-            # Проверяем есть ли пользователи
+            # Есть пользователь?
             cursor.execute("SELECT COUNT(*) FROM Users")
             result = cursor.fetchone()[0]
 
@@ -89,7 +88,7 @@ class Login_Frame(tk.Frame):
                 mb.showinfo("Информация", "Пользователь успешно добавлен")
 
             else:
-                # Проверяем логин и пароль пользователя
+                # Проверяем логин и пароль
                 cursor.execute("SELECT password_hash FROM Users WHERE username = %s", (username,))
                 result = cursor.fetchone()
 

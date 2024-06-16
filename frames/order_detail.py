@@ -14,27 +14,31 @@ class Order_Detail_Window(tk.Frame):
         self.detail_frame = tk.Frame(self)
         self.detail_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # Create Treeview to display order progress
-        self.tree = ttk.Treeview(self.detail_frame, columns=("Status", "Notes"), show="headings")
+        self.v_scroll = ttk.Scrollbar(self.detail_frame, orient=tk.VERTICAL)
+        self.v_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.h_scroll = ttk.Scrollbar(self.detail_frame, orient=tk.HORIZONTAL)
+        self.h_scroll.pack(side=tk.BOTTOM, fill=tk.X)
+
+        self.tree = ttk.Treeview(self.detail_frame, columns=("Status", "Notes"), show="headings", yscrollcommand=self.v_scroll.set, xscrollcommand=self.h_scroll.set)
         self.tree.heading("Status", text="Статус")
         self.tree.heading("Notes", text="Заметки")
         self.tree.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-        # Button to add new progress status
+        self.v_scroll.config(command=self.tree.yview)
+        self.h_scroll.config(command=self.tree.xview)
+
         self.add_progress_btn = tk.Button(self, text="Добавить Прогресс", command=self.open_add_progress_window)
         self.add_progress_btn.pack(pady=10)
 
-        # Execute the query and display data
         self.load_progress()
 
     def load_progress(self):
         cursor = connection.cursor()
 
-        # Clear existing entries in the Treeview
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        # Use '%s' as the placeholder for psycopg2
         cursor.execute("SELECT status, notes FROM progress WHERE id_order = %s", (self.order_id,))
 
         progress_details = cursor.fetchall()

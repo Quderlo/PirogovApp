@@ -22,7 +22,7 @@ class Worker_Input(tk.Frame):
         self.worker_telephone_entry = tk.Entry(self)
 
         self.existing_data_btn = tk.Button(self, text="Выбрать существующего работника",
-                                             command=self.select_existing_worker)
+                                           command=self.select_existing_worker)
 
         # Позиционирование
         self.worker_first_name_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
@@ -80,7 +80,6 @@ class Worker_Input(tk.Frame):
 
     def check_data(self):
         worker_first_name, worker_second_name, worker_telephone = self.collect_data()
-
 
         if not worker_first_name or not worker_second_name or not worker_telephone:
             messagebox.showerror("Ошибка", "Все поля должны быть заполнены")
