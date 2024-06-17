@@ -98,7 +98,7 @@ class Directory_Input(tk.Frame):
         new_directory_id = cursor.fetchone()[0]
         connection.commit()
         cursor.close()
-        messagebox.showinfo("Успех", f"Новая техника успешно добавлена с ID: {new_directory_id[0]}")
-        directory_id = new_directory_id[0]
+        messagebox.showinfo("Успех", f"Новая техника успешно добавлена с ID: {new_directory_id}")
+        directory_id = new_directory_id
         self.parent.get_directory_id(directory_id)
         return

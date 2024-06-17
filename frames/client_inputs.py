@@ -118,7 +118,7 @@ class Client_Input(tk.Frame):
         new_client_id = cursor.fetchone()[0]
         connection.commit()
         cursor.close()
-        messagebox.showinfo("Успех", f"Новый пользователь успешно добавлен с ID: {new_client_id[0]}")
+        messagebox.showinfo("Успех", f"Новый пользователь успешно добавлен с ID: {new_client_id}")
         client_id = new_client_id[0]
         self.parent.get_client_id(client_id)
         return

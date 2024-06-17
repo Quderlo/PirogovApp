@@ -11,7 +11,8 @@ class Order_Frame(tk.Frame):
         self.btn = btn
         self.btn.configure(text="Заказы", command=self.frame_pack)
 
-        self.tree = ttk.Treeview(self, columns=("Description", "Total Cost", "Serial Number", "Created At", "Worker", "Directory"), show="headings")
+        self.tree = ttk.Treeview(self, columns=("Number", "Description", "Total Cost", "Serial Number", "Created At", "Worker", "Directory"), show="headings")
+        self.tree.heading("Number", text="№ Заказа")
         self.tree.heading("Description", text="Описание")
         self.tree.heading("Total Cost", text="Общая стоимость")
         self.tree.heading("Serial Number", text="Серийный номер")
